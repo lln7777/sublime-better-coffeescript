@@ -111,6 +111,7 @@ class CompileCommand(TextCommand):
 
     def run(self, *args, **kwargs):
         no_wrapper = settings_get('noWrapper', True)
+        sourceMaps = settings_get('sourceMaps', True)
         compile_dir = settings_get('compileDir')
         source_file = self.view.file_name()
         source_dir = os.path.normcase(os.path.dirname(source_file))
@@ -120,6 +121,8 @@ class CompileCommand(TextCommand):
         args = ['-c', source_file]
         if no_wrapper:
             args = ['-b'] + args
+        if sourceMaps:
+            args = ['-m'] + args
         # print compile_dir
         # print isinstance(compile_dir, unicode)
         if compile_dir and isinstance(compile_dir, str) or isinstance(compile_dir, unicode):
